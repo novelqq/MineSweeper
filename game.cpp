@@ -2,9 +2,9 @@
 
 Game::Game(int height, int width, int bombs):
  height(height), width(width), bombs(bombs) {
-    board.resize(10);
-    for(int k = 0; k<10; k++){
-        board[k].resize(10);
+    board.resize(width);
+    for(int k = 0; k<width; k++){
+        board[k].resize(height);
     }
 
     for(int y = 0; y<10; y++){
@@ -16,6 +16,7 @@ Game::Game(int height, int width, int bombs):
         }
     }
     gameover = false;
+    won = false;
 }
 
 Game::~Game(){
@@ -32,14 +33,16 @@ void Game::restart(){
         }
     }
     gameover = false;
+    won = false;
 }
 
 void Game::check(){
     int found_bombs = 0;
-    for(int y = 0; y<10; y++){
-        for (int x = 0; x < 10; x++){
+    for(int y = 0; y<height; y++){
+        for (int x = 0; x < width; x++){
             if(board[x][y].isClicked && board[x][y].isBomb){
                 gameover = true;
+                won = false;
             }
             if(board[x][y].isClicked && board[x][y].isBomb){
                 found_bombs++;
@@ -47,5 +50,8 @@ void Game::check(){
         }
     }
 
-    if(found_bombs == 10)
+    if(found_bombs == bombs && !gameover){
+        gameover = true;
+        won = true;
+    }
 }
