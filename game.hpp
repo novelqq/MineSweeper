@@ -13,7 +13,8 @@ class Game{
         Game(int height, int width, int bombs);
         ~Game();
         void restart();
-        void reveal(int x, int y);
+        void reveal(int x, int y, int width, int height);
+        void traverse(int x, int y, int width, int height);
         void check();
         Space getSpace(int x, int y);
 
